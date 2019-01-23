@@ -18,6 +18,7 @@
   },
   "homepage": "https://github.com/cherche/checkers#readme",
   "devDependencies": {
+    "babel-preset-env": "^1.7.0",
     "gulp": "^4.0.0",
     "gulp-babel": "^8.0.0",
     "gulp-babel-minify": "^0.5.0",
