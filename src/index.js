@@ -22,4 +22,15 @@ function array2ToString (array2) {
   return string
 }
 
+console.log(checkers.isLegalMove({
+  start: [2, 2],
+  end: [1, 3]
+}))
+checkers.makeMove({
+  start: [2, 2],
+  end: [4, 4],
+  capture: [3, 3]
+})
+checkers.reset()
 console.log(array2ToString(checkers.board))
+console.log(checkers.getLegalMoves([2, 2]))

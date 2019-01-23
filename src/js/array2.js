@@ -9,7 +9,9 @@ export default function Array2 ({
 
   arr2.get = ([x, y]) => arr2[x][y]
 
-  arr2.set = ([x, y], val) => arr2[x][y] = val
+  arr2.set = ([x, y], val) => {
+    arr2[x][y] = val
+  }
 
   // There should be a better way to include the indices . . .
 
