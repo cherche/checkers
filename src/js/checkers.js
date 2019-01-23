@@ -40,7 +40,7 @@ function Checkers (width, height, whiteRows = 3, blackRows = 3) {
   }
 
   checkers.isInBoard = function isInBoard ([x, y]) {
-    return (0 <= x && x < width) && (0 <= y && y < height)
+    return (x >= 0 && x < width) && (y >= 0 && y < height)
   }
 
   checkers.makeMove = function makeMove ({ start, end, capture }) {
@@ -60,13 +60,13 @@ function Checkers (width, height, whiteRows = 3, blackRows = 3) {
     const piece = checkers.board.get(start)
     checkers.board.set(start, 0)
 
-    const backRow = Math.abs(piece) == 1
+    const backRow = Math.abs(piece) === 1
       // Zero-indexed
       ? checkers.height - 1
       : 0
 
     // If it has to be promoted . . .
-    if (piece > 0 && end[1] == backRow) {
+    if (piece > 0 && end[1] === backRow) {
       checkers.board.set(end, -piece)
     // If it doesn't have to be promoted!
     } else {
