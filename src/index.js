@@ -1,36 +1,59 @@
 import Checkers from './js/checkers.js'
+import Array2 from './js/array2.js'
 
-const checkers = Checkers(8, 8)
-checkers.board.set([3, 3], 2)
+const width = 8
+const height = 8
+const checkers = Checkers(width, height)
 
-window.checkers = checkers
-function array2ToString (array2) {
-  const width = array2.length
-  const height = array2[0].length
-  let string = ''
+const tiles = Array2({ size: [width, height] })
 
-  // Order of iteration does matter
-  // since we're appending to a string
-  for (let y = 0; y < height; y++) {
-    for (let x = 0; x < width; x++) {
-      string += array2[x][y]
-    }
+const $gameContainer = document.createElement('div')
+$gameContainer.className = 'game-container'
+const $board = document.createElement('table')
+$board.className = 'board'
 
-    string += '\n'
+for (let y = 0; y < height; y++) {
+  const $tr = document.createElement('tr')
+  for (let x = 0; x < width; x++) {
+    const $td = document.createElement('td')
+    $td.className = ((x + y) % 2 == 0) ? 'even' : 'odd'
+    const $tile = document.createElement('div')
+    $tile.className = 'highlight'
+    tiles[x][y] = $tile
+    const $piece = document.createElement('div')
+    $tile.appendChild($piece)
+    $td.appendChild($tile)
+    $tr.appendChild($td)
   }
-
-  return string
+  $board.appendChild($tr)
 }
 
-console.log(checkers.isLegalMove({
-  start: [2, 2],
-  end: [1, 3]
-}))
-checkers.makeMove({
-  start: [2, 2],
-  end: [4, 4],
-  capture: [3, 3]
+$gameContainer.appendChild($board)
+document.body.appendChild($gameContainer)
+
+const setTileType = function setTileType([x, y], type) {
+  const $tile = tiles[x][y]
+  // This is clunky, but it works . . .
+  $tile.classList.remove('s0')
+  $tile.classList.remove('s1')
+  $tile.classList.remove('s2')
+  $tile.classList.add('s' + type)
+}
+
+const setTileActive = function setTileActive([x, y], isActive) {
+  const $tile = tiles[x][y]
+  if (isActive) {
+    $tile.classList.add('active')
+  } else {
+    $tile.classList.remove('active')
+  }
+}
+
+// A one-time (hopefully) thing to initiative the board
+checkers.board.forEach2((id, pos) => {
+  setTileType(pos, id)
 })
-checkers.reset()
-console.log(array2ToString(checkers.board))
-console.log(checkers.getLegalMoves([2, 2]))
+
+setTileActive([2, 4], true)
+setTileActive([3, 5], true)
+setTileActive([4, 4], true)
